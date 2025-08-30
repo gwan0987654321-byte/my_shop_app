@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,12 +33,36 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("المخزن"),
+        title: Text("متجر الملابس النسائية"),
         centerTitle: true,
+        backgroundColor: Colors.pink,
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(16),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // عمودين
-          crossAxisSpacing: 10,
-          mainAxisSpacing:
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              leading: Text(products[index]["image"], style: TextStyle(fontSize: 30)),
+              title: Text(products[index]["name"], style: TextStyle(fontSize: 18)),
+              subtitle: Text("الكمية: ${products[index]["count"]}"),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.remove, color: Colors.red),
+                    onPressed: () => decreaseCount(index),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add, color: Colors.green),
+                    onPressed: () => increaseCount(index),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
